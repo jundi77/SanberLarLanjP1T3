@@ -58,9 +58,15 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+
     public function mhs()
     {
-        return $this->hasOne(Mhs::class);
+        if (!$this->isAdmin())
+            return $this->hasOne(Mhs::class);
     }
 
     public function borrow()
