@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\RegisterRequest;
+// use User as GlobalUser;
 
 class RegisterController extends Controller
 {
@@ -17,6 +18,7 @@ class RegisterController extends Controller
      */
     public function __invoke(RegisterRequest $request)
     {
+        
         User::create([
             'name' => request('name'),
             'username' => request('username'),

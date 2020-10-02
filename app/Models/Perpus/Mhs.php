@@ -1,6 +1,6 @@
 <?php
 
-// namespace App\Models;
+namespace App\Models\Perpus;
 
 use Illuminate\Database\Eloquent\Model;
 

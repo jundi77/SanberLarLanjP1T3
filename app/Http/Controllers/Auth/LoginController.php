@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Tymon\JWTAuth\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -15,14 +17,9 @@ class LoginController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return $this->validate_request($request);
-    }
-
-    public function validate_request(Request $request)
-    {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+            'email' => ['required'],
+            'password' => ['required'],
         ]);
 
         if (!$token = auth()->attempt($request->only('email', 'password'))) {
@@ -35,9 +32,8 @@ class LoginController extends Controller
     public function showLoginForm(Request $request)
     {
         return response()->json([
-            'status' => 'no token',
+            'status' => '401',
             'loginToGetToken' => 'api/login'
         ]);
-        // $this->validate_request($request);
     }
 }
