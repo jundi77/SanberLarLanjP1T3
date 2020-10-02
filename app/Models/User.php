@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+// namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -66,11 +66,11 @@ class User extends Authenticatable implements JWTSubject
     public function mhs()
     {
         if (!$this->isAdmin())
-            return $this->hasOne(Mhs::class);
+            return $this->hasOne('App\Models\Perpus\Mhs');
     }
 
     public function borrow()
     {
-        return $this->hasMany(Borrow::class);
+        return $this->hasMany('App\Models\Perpus\Borrow');
     }
 }

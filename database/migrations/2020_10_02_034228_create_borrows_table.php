@@ -16,6 +16,7 @@ class CreateBorrowsTable extends Migration
     {
         Schema::create('borrows', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->date('date_peminjaman')->default(Carbon::now());
             $table->date('date_batas_akhir_peminjaman')->default(Carbon::now()->addWeek(1));
             $table->date('date_pengembalian')->nullable();

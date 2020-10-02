@@ -15,6 +15,7 @@ class CreateMhsTable extends Migration
     {
         Schema::create('mhs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('username',25)->unique();
             $table->string('NIM')->unique();
             $table->string('name');

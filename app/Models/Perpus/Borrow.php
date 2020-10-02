@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Perpus;
+// namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +13,6 @@ class Borrow extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo('App\Models\Perpus\User');
     }
 }
