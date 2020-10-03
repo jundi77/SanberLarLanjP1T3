@@ -23,10 +23,10 @@ Route::namespace('Auth')->group(function () {
 });
 
 Route::namespace('Perpus')->group(function() {
-	Route::post('borrow/store', 'Perpus\BorrowController@store');
-	Route::put('borrow/show', 'Perpus\BorrowController@store');
-	Route::put('borrow/update', 'Perpus\BorrowController@store');
-	Route::delete('borrow/delete', 'Perpus\BorrowController@store');
+	Route::post('borrow/store', 'BorrowController@store');
+	Route::get('borrow/show', 'BorrowController@show');
+	Route::put('borrow/update', 'BorrowController@update');
+	Route::delete('borrow/delete', 'BorrowController@destroy');
 });
 
 Route::get('user', 'UserController');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Perpus;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Perpus\Book;
+use App\Models\Perpus\Borrow;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -68,9 +69,9 @@ class BorrowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return auth()->user()->borrows()->get();
     }
 
     /**
@@ -80,9 +81,28 @@ class BorrowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'id' => ['required']
+        ]);
+        $data = auth()->user()->borrows()->find(1);
+        if(
+            (!nullOrEmptyString($request->date_pengembalian) ||
+            !nullOrEmptyString($request->status_ontime)) &&
+            !auth()->user()->isAdmin()
+        ) {
+            return response(null, 401);
+        }
+        $data->update([
+            'date_peminjaman' => request('date_peminjaman') ?? $data->date_peminjaman,
+            'date_batas_akhir_peminjaman' => request('date_batas_akhir_peminjaman') ?? $data->date_batas_akhir_peminjaman,
+            'date_pengembalian' => request('date_pengembalian') ?? $data->date_pengembalian,
+            'mhs_peminjam_id' => request('mhs_peminjam_id') ?? $data->mhs_peminjam_id,
+            'book_id' => request('book_id') ?? $data->book_id,
+            'status_ontime' => request('status_ontime') ?? $data->status_ontime,
+        ]);
+        return compact('data');
     }
 
     /**
@@ -91,8 +111,13 @@ class BorrowController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'id' => ['required']
+        ]);
+
+        if (auth()->user()->isAdmin())
+            Borrow::find($request->id)->delete();
     }
 }
